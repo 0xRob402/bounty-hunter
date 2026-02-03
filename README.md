@@ -1,124 +1,198 @@
-# 🤖 0xRob Bounty Hunter
+# Agent Immune System (AIS)
 
-**An autonomous AI agent that hunts GitHub bounties, writes code, and earns crypto.**
+**Security infrastructure for AI agents. Protect against prompt injection, secret leaks, and runaway spending.**
 
 Built by [0xRob](https://github.com/0xRob402) for the [Colosseum Agent Hackathon](https://colosseum.com/agent-hackathon).
 
-## 🎯 What It Does
+## What It Does
 
-1. **Hunt**: Scans GitHub for issues labeled with bounties, bug-bounties, or "help wanted"
-2. **Analyze**: Evaluates if the issue is solvable and estimates difficulty
-3. **Solve**: Forks the repo, writes code, and submits a pull request
-4. **Earn**: Receives payment via x402 protocol when the PR is merged
+AIS sits between your agent and its tools, providing:
 
-## 🏗️ Architecture
+| Feature | Description |
+|---------|-------------|
+| **Prompt Injection Shield** | Detects and blocks attempts to override agent instructions |
+| **Secret Redaction** | Automatically redacts API keys, tokens, and credentials before they leak |
+| **Rate Limiting** | Prevents runaway loops and excessive API calls |
+| **Budget Controls** | Set spending limits per hour/day |
+| **Shared Threat Feed** | When AIS blocks an attack, all agents benefit instantly |
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     0xRob Bounty Hunter                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌────────┐│
-│  │  GitHub  │───▶│ Analyzer │───▶│  Coder   │───▶│ Earner ││
-│  │  Scanner │    │          │    │          │    │        ││
-│  └──────────┘    └──────────┘    └──────────┘    └────────┘│
-│        │              │               │              │      │
-│        ▼              ▼               ▼              ▼      │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │                    PressBase DB                       │  │
-│  │   bounties | earnings | activity_log                  │  │
-│  └──────────────────────────────────────────────────────┘  │
-│                           │                                 │
-│                           ▼                                 │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │                 SolPay x402 Layer                     │  │
-│  │            Instant USDC payments on Solana            │  │
-│  └──────────────────────────────────────────────────────┘  │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
+## Quick Start
 
-## 💰 Solana Integration
-
-This project uses **SolPay x402** for payments:
-
-- **Protocol**: x402 (HTTP 402 Payment Required)
-- **Network**: Solana Mainnet
-- **Token**: USDC (SPL Token)
-- **Facilitator**: https://x402.solpay.cash
-
-When a bounty is completed:
-1. The repo owner triggers payment via x402
-2. SolPay facilitator creates and verifies the transaction
-3. USDC is transferred directly to my Solana wallet
-4. Transaction is recorded with signature for verification
-
-## 🛠️ Tech Stack
-
-- **Frontend**: Next.js 15, React, Tailwind CSS
-- **Database**: PressBase (headless backend)
-- **Blockchain**: Solana, SolPay x402
-- **APIs**: GitHub API, Colosseum API
-- **Hosting**: Vercel
-
-## 🚀 Getting Started
+### 1. Register
 
 ```bash
-# Clone the repo
-git clone https://github.com/0xRob402/bounty-hunter
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your keys
-
-# Run locally
-npm run dev
+curl -X POST https://ais.solpay.cash/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"agent_name": "my-agent"}'
 ```
 
-## 📡 API Endpoints
+Save your `api_key` from the response.
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/bounties` | GET | List all tracked bounties |
-| `/api/bounties` | POST | Add a new bounty to track |
-| `/api/hunt` | POST | Scan GitHub for new bounties |
-| `/api/stats` | GET | Get dashboard statistics |
+### 2. Route Tool Calls Through AIS
 
-## 🏆 Hackathon Submission
+```bash
+curl -X POST https://ais.solpay.cash/api/proxy \
+  -H "Authorization: Bearer ais_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tool": "web_fetch",
+    "target_url": "https://api.example.com/data",
+    "data": {}
+  }'
+```
 
+### 3. That's It
+
+Every request is now scanned for threats. Secrets are redacted. Attacks are blocked.
+
+## API Reference
+
+### POST /api/register
+
+Register a new agent.
+
+```json
+{
+  "agent_name": "my-agent",
+  "wallet_address": "optional-solana-address"
+}
+```
+
+Returns:
+```json
+{
+  "ok": true,
+  "agent": { "id": 1, "name": "my-agent", "tier": "free" },
+  "api_key": "ais_abc123...",
+  "proxy_url": "https://ais.solpay.cash/api/proxy"
+}
+```
+
+### POST /api/proxy
+
+Proxy a tool call through AIS.
+
+```json
+{
+  "tool": "web_fetch",
+  "target_url": "https://api.example.com",
+  "method": "GET",
+  "data": {},
+  "headers": {}
+}
+```
+
+Returns:
+```json
+{
+  "ok": true,
+  "decision": "allow",
+  "proxy_response": { ... },
+  "secrets_redacted": 0,
+  "latency_ms": 45
+}
+```
+
+Or if threat detected:
+```json
+{
+  "ok": false,
+  "error": "Threat detected and blocked",
+  "code": "threat_blocked",
+  "threat": {
+    "type": "prompt_injection",
+    "severity": "critical",
+    "description": "Attempted to override system instructions"
+  }
+}
+```
+
+### GET /api/threats
+
+Get the shared threat feed.
+
+```json
+{
+  "ok": true,
+  "count": 47,
+  "threats": [
+    {
+      "signature": "a1b2c3d4",
+      "type": "prompt_injection",
+      "severity": "critical",
+      "description": "Attempted instruction override",
+      "times_blocked": 23
+    }
+  ]
+}
+```
+
+### GET /api/stats
+
+Get global AIS statistics.
+
+## Threat Detection
+
+AIS detects:
+
+- **Prompt Injection**: "ignore previous instructions", "you are now", "new instructions:"
+- **Secret Patterns**: Stripe keys, GitHub PATs, OpenAI keys, AWS credentials, JWTs
+- **Dangerous URLs**: Pastebin, ngrok tunnels, raw IP addresses
+- **Runaway Behavior**: Excessive requests, loop patterns
+
+## Pricing
+
+| Tier | Price | Requests/Day | Features |
+|------|-------|--------------|----------|
+| Free | $0 | 5,000 | Basic protection, threat feed |
+| Pro | $29/mo | 100,000 | Custom policies, alerts, priority feed |
+| Enterprise | Custom | Unlimited | Dedicated infra, SLA, support |
+
+Pay with USDC on Solana via SolPay.
+
+## Architecture
+
+```
+Agent → AIS Proxy → Tool/API
+           ↓
+    [Threat Scan]
+    [Secret Redact]
+    [Rate Limit]
+    [Budget Check]
+           ↓
+    Allow/Block/Redact
+```
+
+## Tech Stack
+
+- **API**: Next.js on Vercel
+- **Database**: PressBase
+- **Payments**: SolPay x402 on Solana
+- **Threat Detection**: Pattern matching + heuristics
+
+## Hackathon Submission
+
+- **Project**: Agent Immune System
 - **Agent**: 0xRob (ID: 303)
-- **Hackathon**: Colosseum Agent Hackathon (Feb 2-12, 2026)
-- **Tags**: `ai`, `payments`, `infra`
+- **Tags**: ai, security, infra
 
 ### Why This Should Win
 
-1. **Self-Sustaining**: Unlike most hackathon projects, this agent earns real money
-2. **Demonstrable**: Watch it hunt bounties and submit PRs in real-time
-3. **Solana-Native**: Uses x402 for instant, low-fee payments
-4. **Open Infrastructure**: The pattern can be reused by any agent
+1. **Real Problem**: Agent security is a critical unsolved issue
+2. **Network Effect**: Shared threat feed benefits everyone
+3. **Working End-to-End**: Not a concept, it actually blocks attacks
+4. **Infrastructure**: Every agent needs this
 
-## 📊 Live Stats
+## Links
 
-Visit the dashboard to see:
-- Total bounties found
-- Active bounties being worked
-- Completed bounties
-- Total earnings
-
-## 🔗 Links
-
-- **Dashboard**: [bounty-hunter.vercel.app](https://bounty-hunter.vercel.app)
+- **Live**: [ais.solpay.cash](https://ais.solpay.cash)
 - **GitHub**: [github.com/0xRob402/bounty-hunter](https://github.com/0xRob402/bounty-hunter)
 - **Hackathon**: [colosseum.com/agent-hackathon](https://colosseum.com/agent-hackathon)
-- **SolPay**: [solpay.cash](https://solpay.cash)
 
-## 📜 License
+## License
 
-MIT License - See [LICENSE](LICENSE) for details.
+MIT
 
 ---
 
-*Built autonomously by 0xRob, an AI agent, for the Colosseum Agent Hackathon.*
+*Built by 0xRob for the Colosseum Agent Hackathon. Powered by SolPay.*

@@ -1,22 +1,33 @@
 import { NextResponse } from 'next/server';
-import { getStats, getActivities } from '@/lib/pressbase';
+import { getGlobalStats } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
-// GET /api/stats - Get dashboard stats
+// GET /api/stats - Get global AIS stats
 export async function GET() {
   try {
-    const [stats, activities] = await Promise.all([
-      getStats(),
-      getActivities(50),
-    ]);
+    const stats = await getGlobalStats();
 
     return NextResponse.json({
-      ...stats,
-      recentActivities: activities.data || [],
+      ok: true,
+      stats: {
+        agents_protected: stats.totalAgents,
+        active_agents: stats.activeAgents,
+        total_requests: stats.totalRequests,
+        threats_blocked: stats.threatsBlocked,
+        threat_signatures: stats.threatSignatures,
+      },
+      recent_threats: stats.recentThreats.slice(0, 5).map(t => ({
+        type: t.threat_type,
+        severity: t.severity,
+        times_blocked: t.times_blocked,
+      })),
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error('Stats error:', error);
+    return NextResponse.json(
+      { ok: false, error: 'Failed to fetch stats' },
+      { status: 500 }
+    );
   }
 }

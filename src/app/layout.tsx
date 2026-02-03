@@ -8,11 +8,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "0xRob Bounty Hunter | Autonomous AI Agent",
-  description: "An autonomous AI agent that hunts GitHub bounties, writes code, and earns crypto. Built for the Colosseum Agent Hackathon.",
+  title: "Agent Immune System | Security for AI Agents",
+  description: "Protect your AI agents from prompt injection, secret leaks, and runaway spending. One proxy, instant protection, shared threat intelligence.",
   openGraph: {
-    title: "0xRob Bounty Hunter",
-    description: "Autonomous AI agent hunting GitHub bounties and earning crypto",
+    title: "Agent Immune System",
+    description: "Security infrastructure for AI agents. Prompt injection defense, secret redaction, budget controls.",
     type: "website",
   },
 };
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased bg-gray-950`}>
         {children}
       </body>
     </html>
