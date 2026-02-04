@@ -69,6 +69,62 @@ export default function Dashboard() {
     }
   };
 
+  // Show agent selection if multiple agents found via Twitter login
+  if (isOperatorView && agents.length > 0 && !agent) {
+    return (
+      <main className="min-h-screen bg-gray-950 text-white flex items-center justify-center p-4">
+        <div className="w-full max-w-lg">
+          <div className="text-center mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 mb-6">
+              <Image src="/logo.png" alt="AIS" width={50} height={32} className="h-8 w-auto" />
+              <span className="text-xl font-bold">Agent Immune System</span>
+            </Link>
+            <h1 className="text-2xl font-bold mb-2">Your Agents</h1>
+            <p className="text-gray-400">Logged in as @{twitterHandle}</p>
+          </div>
+
+          <div className="space-y-4">
+            {agents.map((a) => (
+              <button
+                key={a.id}
+                onClick={() => setAgent(a)}
+                className="w-full bg-gray-900 border border-gray-800 hover:border-emerald-500 rounded-xl p-4 text-left transition"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-semibold text-lg">{a.name}</span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${a.status === 'active' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+                    {a.status}
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-sm text-gray-400">
+                  <div>
+                    <div className="text-white font-medium">{a.requests_total || 0}</div>
+                    <div>Requests</div>
+                  </div>
+                  <div>
+                    <div className="text-emerald-400 font-medium">{a.threats_blocked || 0}</div>
+                    <div>Threats Blocked</div>
+                  </div>
+                  <div>
+                    <div className="text-white font-medium">${a.price_per_request}</div>
+                    <div>Per Request</div>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => { setIsOperatorView(false); setAgents([]); setTwitterHandle(''); }}
+            className="w-full text-gray-400 hover:text-white mt-6 text-sm"
+          >
+            Logout
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   if (!agent) {
     return (
       <main className="min-h-screen bg-gray-950 text-white flex items-center justify-center p-4">
