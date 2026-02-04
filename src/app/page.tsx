@@ -1,5 +1,6 @@
 import { getGlobalStats } from '@/lib/db';
 import Link from 'next/link';
+import Image from 'next/image';
 import MobileNav from '@/components/MobileNav';
 
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,7 @@ export default async function Home() {
       <nav className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm fixed w-full z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between relative">
           <div className="flex items-center gap-2">
-            <ShieldIcon className="w-7 h-7 md:w-8 md:h-8 text-emerald-400" />
+            <Image src="/logo.png" alt="AIS" width={32} height={32} className="w-7 h-7 md:w-8 md:h-8" />
             <span className="text-lg md:text-xl font-bold">Agent Immune System</span>
           </div>
           {/* Desktop nav */}
@@ -202,7 +203,7 @@ export default async function Home() {
           </div>
 
           <p className="text-center text-gray-500 mt-8">
-            Pay with USDC on Solana via SolPay. Instant settlement, sub-cent fees.
+            Pay with USDC on Solana via <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a>. Instant settlement, sub-cent fees.
           </p>
         </div>
       </section>
@@ -227,11 +228,11 @@ export default async function Home() {
         <div className="container mx-auto max-w-5xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <ShieldIcon className="w-6 h-6 text-emerald-400" />
+              <Image src="/logo.png" alt="AIS" width={24} height={24} className="w-6 h-6" />
               <span className="font-semibold">Agent Immune System</span>
             </div>
             <p className="text-gray-500 text-sm">
-              Built for the Colosseum Agent Hackathon. Powered by SolPay.
+              Built for the Colosseum Agent Hackathon. x402 agent payments powered by <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a>.
             </p>
             <div className="flex gap-6 text-gray-400 text-sm">
               <Link href="/docs" className="hover:text-white transition">Docs</Link>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Dashboard() {
   const [apiKey, setApiKey] = useState('');
@@ -43,7 +44,7 @@ export default function Dashboard() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-2 mb-6">
-              <ShieldIcon className="w-8 h-8 text-emerald-400" />
+              <Image src="/logo.png" alt="AIS" width={32} height={32} className="w-8 h-8" />
               <span className="text-xl font-bold">Agent Immune System</span>
             </Link>
             <h1 className="text-2xl font-bold mb-2">Agent Dashboard</h1>
@@ -88,7 +89,7 @@ export default function Dashboard() {
       <nav className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <ShieldIcon className="w-7 h-7 text-emerald-400" />
+            <Image src="/logo.png" alt="AIS" width={28} height={28} className="w-7 h-7" />
             <span className="text-lg font-bold">Agent Immune System</span>
           </Link>
           <button

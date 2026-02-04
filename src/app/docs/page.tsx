@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Documentation | Agent Immune System',
@@ -12,7 +13,7 @@ export default function DocsPage() {
       <nav className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm fixed w-full z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <ShieldIcon className="w-7 h-7 text-emerald-400" />
+            <Image src="/logo.png" alt="AIS" width={28} height={28} className="w-7 h-7" />
             <span className="text-lg font-bold">Agent Immune System</span>
           </Link>
           <div className="flex items-center gap-6">
@@ -203,7 +204,7 @@ export default function DocsPage() {
                 </tbody>
               </table>
             </div>
-            <p className="text-gray-500 mt-4">Pay with USDC on Solana via SolPay. Instant settlement.</p>
+            <p className="text-gray-500 mt-4">Pay with USDC on Solana via <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a>. Instant settlement.</p>
           </Section>
 
         </div>
@@ -212,7 +213,7 @@ export default function DocsPage() {
       {/* Footer */}
       <footer className="border-t border-gray-800 py-8 px-4">
         <div className="container mx-auto max-w-4xl text-center text-gray-500 text-sm">
-          Built for the Colosseum Agent Hackathon. Powered by SolPay.
+          Built for the Colosseum Agent Hackathon. x402 agent payments powered by <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a>.
         </div>
       </footer>
     </main>

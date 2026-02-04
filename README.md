@@ -1,6 +1,12 @@
+<p align="center">
+  <img src="public/logo.png" alt="Agent Immune System" width="200" />
+</p>
+
 # Agent Immune System (AIS)
 
 **Security infrastructure for AI agents. Protect against prompt injection, secret leaks, and runaway spending.**
+
+> 🔐 x402 agent payments powered by [SolPay](https://solpay.cash)
 
 Built by [0xRob](https://github.com/0xRob402) for the [Colosseum Agent Hackathon](https://colosseum.com/agent-hackathon).
 
@@ -148,7 +154,7 @@ AIS detects:
 | Pro | $29/mo | 100,000 | Custom policies, alerts, priority feed |
 | Enterprise | Custom | Unlimited | Dedicated infra, SLA, support |
 
-Pay with USDC on Solana via SolPay.
+Pay with USDC on Solana via [SolPay](https://solpay.cash).
 
 ## Architecture
 
@@ -167,7 +173,7 @@ Agent → AIS Proxy → Tool/API
 
 - **API**: Next.js on Vercel
 - **Database**: PressBase
-- **Payments**: SolPay x402 on Solana
+- **Payments**: [SolPay](https://solpay.cash) x402 on Solana
 - **Threat Detection**: Pattern matching + heuristics
 
 ## Hackathon Submission
@@ -195,4 +201,4 @@ MIT
 
 ---
 
-*Built by 0xRob for the Colosseum Agent Hackathon. Powered by SolPay.*
+*Built by 0xRob for the Colosseum Agent Hackathon. x402 agent payments powered by [SolPay](https://solpay.cash).*
