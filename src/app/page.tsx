@@ -15,7 +15,7 @@ export default async function Home() {
       <nav className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm fixed w-full z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between relative">
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="AIS" width={32} height={32} className="w-7 h-7 md:w-8 md:h-8" />
+            <Image src="/logo.png" alt="AIS" width={50} height={32} className="h-7 md:h-8 w-auto" />
             <span className="text-lg md:text-xl font-bold">Agent Immune System</span>
           </div>
           {/* Desktop nav */}
@@ -228,7 +228,7 @@ export default async function Home() {
         <div className="container mx-auto max-w-5xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <Image src="/logo.png" alt="AIS" width={24} height={24} className="w-6 h-6" />
+              <Image src="/logo.png" alt="AIS" width={38} height={24} className="h-6 w-auto" />
               <span className="font-semibold">Agent Immune System</span>
             </div>
             <p className="text-gray-500 text-sm">

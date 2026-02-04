@@ -13,7 +13,7 @@ export default function DocsPage() {
       <nav className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm fixed w-full z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="AIS" width={28} height={28} className="w-7 h-7" />
+            <Image src="/logo.png" alt="AIS" width={44} height={28} className="h-7 w-auto" />
             <span className="text-lg font-bold">Agent Immune System</span>
           </Link>
           <div className="flex items-center gap-6">

@@ -44,7 +44,7 @@ export default function Dashboard() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-2 mb-6">
-              <Image src="/logo.png" alt="AIS" width={32} height={32} className="w-8 h-8" />
+              <Image src="/logo.png" alt="AIS" width={50} height={32} className="h-8 w-auto" />
               <span className="text-xl font-bold">Agent Immune System</span>
             </Link>
             <h1 className="text-2xl font-bold mb-2">Agent Dashboard</h1>
@@ -89,7 +89,7 @@ export default function Dashboard() {
       <nav className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="AIS" width={28} height={28} className="w-7 h-7" />
+            <Image src="/logo.png" alt="AIS" width={44} height={28} className="h-7 w-auto" />
             <span className="text-lg font-bold">Agent Immune System</span>
           </Link>
           <button
