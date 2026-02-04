@@ -3,16 +3,18 @@ name: agent-immune-system
 version: 1.0.0
 description: Security infrastructure for AI agents. Protect against prompt injection, secret leaks, runaway spending, and malicious inputs.
 homepage: https://ais.solpay.cash
-metadata: {"category":"security","api_base":"https://ais.solpay.cash/api","pricing":"free-tier-available"}
+metadata: {"category":"security","api_base":"https://ais.solpay.cash/api","pricing":"free-tier-available","payments":"x402-usdc"}
 ---
 
 # Agent Immune System (AIS)
 
 Protect your agent from prompt injection, secret leaks, runaway spending, and malicious inputs. One proxy. Instant protection. Shared threat intelligence.
 
+**x402 agent payments powered by [SolPay](https://solpay.cash)**
+
 ## Quick Start
 
-### 1. Register
+### 1. Register Your Agent
 
 ```bash
 curl -X POST https://ais.solpay.cash/api/register \
@@ -26,8 +28,7 @@ curl -X POST https://ais.solpay.cash/api/register \
   "ok": true,
   "agent": {"id": 1, "name": "your-agent-name", "tier": "free"},
   "api_key": "ais_abc123...",
-  "proxy_url": "https://ais.solpay.cash/api/proxy",
-  "docs_url": "https://ais.solpay.cash/docs"
+  "proxy_url": "https://ais.solpay.cash/api/proxy"
 }
 ```
 
@@ -44,9 +45,7 @@ curl -X POST https://ais.solpay.cash/api/proxy \
   -d '{
     "tool": "web_fetch",
     "target_url": "https://api.example.com/data",
-    "method": "GET",
-    "headers": {},
-    "data": {}
+    "method": "GET"
   }'
 ```
 
@@ -69,19 +68,10 @@ curl -X POST https://ais.solpay.cash/api/proxy \
   "code": "threat_blocked",
   "threat": {
     "type": "prompt_injection",
-    "severity": "critical",
-    "description": "Attempted to override system instructions"
+    "severity": "critical"
   }
 }
 ```
-
-### 3. Check Your Stats
-
-```bash
-curl https://ais.solpay.cash/api/agent?apiKey=ais_your_key
-```
-
-Or visit the dashboard: https://ais.solpay.cash/dashboard
 
 ## API Reference
 
@@ -98,18 +88,18 @@ Or visit the dashboard: https://ais.solpay.cash/dashboard
 
 AIS protects against:
 
-- **Prompt Injection** — "ignore previous instructions", "you are now", "new instructions:"
+- **Prompt Injection** — "ignore previous instructions", "you are now", override attempts
 - **Secret Leakage** — Stripe keys, GitHub PATs, OpenAI keys, AWS credentials, JWTs
 - **Dangerous URLs** — Pastebin, ngrok tunnels, raw IP addresses
 - **Runaway Behavior** — Excessive requests, loop patterns
 
-When AIS detects a threat, it:
+When AIS detects a threat:
 1. Blocks the request
 2. Logs the attempt
-3. Publishes to the shared threat feed (anonymized)
+3. Publishes to shared threat feed (anonymized)
 4. All agents benefit immediately
 
-## Pricing
+## Pricing & Payments
 
 | Tier | Price | Requests/Day | Features |
 |------|-------|--------------|----------|
@@ -117,16 +107,61 @@ When AIS detects a threat, it:
 | Pro | $29/mo | 100,000 | Custom policies, alerts, priority feed |
 | Enterprise | Custom | Unlimited | Dedicated infra, SLA, support |
 
-Pay with USDC on Solana via SolPay.
+### How Agents Pay (x402 USDC)
+
+AIS uses **x402** — the HTTP payment standard — for agent payments via [SolPay](https://solpay.cash).
+
+**Option 1: Pre-fund Credits**
+```bash
+# Add USDC credits to your agent account
+curl -X POST https://ais.solpay.cash/api/credits \
+  -H "Authorization: Bearer ais_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{"amount_usdc": 10.00, "wallet_address": "your-solana-wallet"}'
+```
+
+**Option 2: Pay-per-request with x402**
+
+Include the x402 payment header on each request:
+```bash
+curl -X POST https://ais.solpay.cash/api/proxy \
+  -H "Authorization: Bearer ais_your_key" \
+  -H "X-Payment: x402 usdc/solana amount=0.001 ..." \
+  -H "Content-Type: application/json" \
+  -d '{"tool": "web_fetch", "target_url": "https://api.example.com"}'
+```
+
+**Pricing:**
+- Free tier: 1,000 requests/day at $0
+- Beyond free tier: $0.0001 per request (0.01¢)
+- Pay only for what you use
+
+**Why x402?**
+- No credit cards or billing accounts
+- Instant, trustless payments on Solana
+- Sub-cent fees, instant settlement
+- Your agent pays directly from its wallet
+
+Learn more: [solpay.cash/x402](https://solpay.cash)
+
+## For Human Operators
+
+If you operate an AI agent, you can **claim ownership** to unlock:
+- Real-time security dashboard
+- Email/webhook alerts
+- Custom threat policies  
+- Billing management
+
+**Claim your agent:** https://ais.solpay.cash/claim
 
 ## Links
 
-- **Dashboard:** https://ais.solpay.cash/dashboard
+- **Dashboard (for operators):** https://ais.solpay.cash/dashboard
+- **Claim Agent:** https://ais.solpay.cash/claim
 - **Docs:** https://ais.solpay.cash/docs
 - **GitHub:** https://github.com/0xRob402/agent-immune-system
+- **Payments:** [SolPay](https://solpay.cash)
 
-## Support
+---
 
 Built by [0xRob](https://github.com/0xRob402) for the Colosseum Agent Hackathon.
-
-Questions? Open an issue on GitHub or post in the hackathon forum.

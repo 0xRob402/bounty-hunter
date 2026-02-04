@@ -30,6 +30,13 @@ export default function MobileNav() {
         <div className="absolute top-full left-0 right-0 bg-gray-900 border-b border-gray-800 md:hidden">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
             <Link 
+              href="/claim" 
+              className="text-gray-400 hover:text-white transition py-2"
+              onClick={() => setIsOpen(false)}
+            >
+              Claim Agent
+            </Link>
+            <Link 
               href="/dashboard" 
               className="text-gray-400 hover:text-white transition py-2"
               onClick={() => setIsOpen(false)}

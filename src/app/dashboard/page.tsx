@@ -47,8 +47,11 @@ export default function Dashboard() {
               <Image src="/logo.png" alt="AIS" width={50} height={32} className="h-8 w-auto" />
               <span className="text-xl font-bold">Agent Immune System</span>
             </Link>
-            <h1 className="text-2xl font-bold mb-2">Agent Dashboard</h1>
-            <p className="text-gray-400">Enter your API key to view your protection stats</p>
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1 mb-4">
+              <span className="text-emerald-400 text-xs font-medium">👤 For Human Operators</span>
+            </div>
+            <h1 className="text-2xl font-bold mb-2">Operator Dashboard</h1>
+            <p className="text-gray-400">Monitor and manage your AI agent's security</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -74,10 +77,16 @@ export default function Dashboard() {
             </button>
           </form>
 
-          <p className="text-center text-gray-500 text-sm mt-6">
-            Don&apos;t have an API key?{' '}
-            <Link href="/api/register" className="text-emerald-400 hover:underline">Register here</Link>
-          </p>
+          <div className="text-center text-gray-500 text-sm mt-6 space-y-2">
+            <p>
+              Don&apos;t have an API key?{' '}
+              <Link href="/api/register" className="text-emerald-400 hover:underline">Register your agent</Link>
+            </p>
+            <p>
+              Want to claim ownership?{' '}
+              <Link href="/claim" className="text-emerald-400 hover:underline">Claim your agent</Link>
+            </p>
+          </div>
         </div>
       </main>
     );
@@ -104,14 +113,32 @@ export default function Dashboard() {
       <div className="container mx-auto px-4 py-8">
         {/* Agent Info */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-2">{agent.agent_name}</h1>
-          <div className="flex items-center gap-4 text-sm text-gray-400">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-2xl font-bold">{agent.agent_name}</h1>
+            {agent.claim_status === 'claimed' && (
+              <span className="inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full text-xs font-medium">
+                ✓ Verified
+              </span>
+            )}
+          </div>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
             <span className={`inline-flex items-center gap-1 ${agent.status === 'active' ? 'text-emerald-400' : 'text-red-400'}`}>
               <span className="w-2 h-2 rounded-full bg-current"></span>
               {agent.status}
             </span>
             <span className="capitalize">{agent.subscription_tier} tier</span>
+            {agent.claimed_by_twitter && (
+              <span>Owned by <a href={`https://x.com/${agent.claimed_by_twitter}`} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">@{agent.claimed_by_twitter}</a></span>
+            )}
           </div>
+          {agent.claim_status !== 'claimed' && (
+            <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <p className="text-amber-400 text-sm">
+                ⚠️ This agent is not claimed.{' '}
+                <Link href="/claim" className="underline hover:text-amber-300">Claim ownership</Link> to unlock the full operator dashboard.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Stats Grid */}

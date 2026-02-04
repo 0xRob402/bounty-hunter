@@ -59,6 +59,12 @@ export interface Agent {
   requests_total: number;
   threats_blocked: number;
   status: 'active' | 'suspended' | 'quarantined';
+  // Claim fields (human operator verification)
+  claim_code?: string;
+  claim_status?: 'unclaimed' | 'pending' | 'claimed';
+  claimed_by_twitter?: string;
+  claim_tweet_url?: string;
+  claimed_at?: string;
   created_at?: string;
 }
 
@@ -82,6 +88,23 @@ export async function updateAgent(id: number, updates: Partial<Agent>) {
 
 export async function getAllAgents() {
   const result = await db<PaginatedResponse<Agent>>('GET', '/db/ais_agents?order=created_at:desc&limit=1000');
+  return { ok: result.ok, data: extractArray(result) };
+}
+
+export async function getAgentByName(name: string) {
+  const result = await db<PaginatedResponse<Agent>>('GET', `/db/ais_agents?where=agent_name:eq:${encodeURIComponent(name)}&limit=1`);
+  const agents = extractArray(result);
+  return agents.length > 0 ? { ok: true, data: agents[0] } : { ok: false };
+}
+
+export async function getAgentByClaimCode(code: string) {
+  const result = await db<PaginatedResponse<Agent>>('GET', `/db/ais_agents?where=claim_code:eq:${encodeURIComponent(code)}&limit=1`);
+  const agents = extractArray(result);
+  return agents.length > 0 ? { ok: true, data: agents[0] } : { ok: false };
+}
+
+export async function getAgentsByTwitter(twitterHandle: string) {
+  const result = await db<PaginatedResponse<Agent>>('GET', `/db/ais_agents?where=claimed_by_twitter:eq:${encodeURIComponent(twitterHandle)}&order=created_at:desc&limit=100`);
   return { ok: result.ok, data: extractArray(result) };
 }
 

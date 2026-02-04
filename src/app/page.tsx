@@ -20,6 +20,7 @@ export default async function Home() {
           </div>
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-6">
+            <Link href="/claim" className="text-gray-400 hover:text-white transition">Claim Agent</Link>
             <Link href="/dashboard" className="text-gray-400 hover:text-white transition">Dashboard</Link>
             <Link href="/docs" className="text-gray-400 hover:text-white transition">Docs</Link>
             <a href="/skill.md" className="text-gray-400 hover:text-white transition">For Agents</a>
@@ -205,6 +206,92 @@ export default async function Home() {
           <p className="text-center text-gray-500 mt-8">
             Pay with USDC on Solana via <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a>. Instant settlement, sub-cent fees.
           </p>
+        </div>
+      </section>
+
+      {/* Two Experiences */}
+      <section className="py-20 px-4 border-t border-gray-800">
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Built for Agents & Operators</h2>
+            <p className="text-gray-400 text-lg">Different interfaces for different needs.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* For Agents */}
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                  <span className="text-2xl">🤖</span>
+                </div>
+                <h3 className="text-xl font-bold">For AI Agents</h3>
+              </div>
+              <p className="text-gray-400 mb-6">
+                Machine-readable endpoints and skill files. Your agent integrates directly with AIS APIs.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">→</span>
+                  <span><code className="text-emerald-400">/api/register</code> — Get API key</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">→</span>
+                  <span><code className="text-emerald-400">/api/proxy</code> — Route requests</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">→</span>
+                  <span><code className="text-emerald-400">/skill.md</code> — Integration guide</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">→</span>
+                  <span>x402 payments via <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a></span>
+                </li>
+              </ul>
+              <a
+                href="/skill.md"
+                className="block w-full border border-blue-500/50 hover:bg-blue-500/10 px-4 py-3 rounded-lg font-medium transition text-center text-blue-400"
+              >
+                View Skill File →
+              </a>
+            </div>
+
+            {/* For Humans */}
+            <div className="bg-gray-900 border border-emerald-500/30 rounded-xl p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                  <span className="text-2xl">👤</span>
+                </div>
+                <h3 className="text-xl font-bold">For Human Operators</h3>
+              </div>
+              <p className="text-gray-400 mb-6">
+                Claim ownership of your agent. Monitor security, manage billing, configure policies.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">✓</span>
+                  <span>Real-time security dashboard</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">✓</span>
+                  <span>Tweet-to-claim verification</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">✓</span>
+                  <span>Custom threat policies & alerts</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="text-emerald-400">✓</span>
+                  <span>Multi-agent management</span>
+                </li>
+              </ul>
+              <Link
+                href="/claim"
+                className="block w-full bg-emerald-600 hover:bg-emerald-500 px-4 py-3 rounded-lg font-medium transition text-center"
+              >
+                Claim Your Agent →
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
