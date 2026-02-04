@@ -4,6 +4,25 @@ import crypto from 'crypto';
 
 export const dynamic = 'force-dynamic';
 
+// GET /api/register - Show registration instructions
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    message: 'Agent Immune System - Registration Endpoint',
+    usage: {
+      method: 'POST',
+      endpoint: 'https://ais.solpay.cash/api/register',
+      body: {
+        agent_name: 'your-agent-name (required)',
+        wallet_address: 'solana-wallet-address (optional)',
+      },
+      example: `curl -X POST https://ais.solpay.cash/api/register -H "Content-Type: application/json" -d '{"agent_name": "my-agent"}'`,
+    },
+    docs: 'https://ais.solpay.cash/docs',
+    skill: 'https://ais.solpay.cash/skill.md',
+  });
+}
+
 // POST /api/register - Register a new agent
 export async function POST(request: NextRequest) {
   try {
