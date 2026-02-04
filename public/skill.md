@@ -101,15 +101,20 @@ When AIS detects a threat:
 
 ## Pricing & Payments
 
+**Launch Special (ends March 1, 2026):** Register now to lock in $0.001/request forever.
+
 | Tier | Price | Requests |
 |------|-------|----------|
 | Free | $0 | 1,000/day |
-| Pay Per Call | $0.0001/request | Unlimited |
+| Launch Price | $0.001/request | Unlimited (locked forever) |
+| Standard (Mar 1+) | $0.002/request | Unlimited |
 
-**Example costs:**
+**Launch pricing example:**
 - 1,000 requests/day = Free
-- 10,000 requests = $1
-- 100,000 requests = $10
+- 10,000 requests = $10
+- 100,000 requests = $100
+
+Register before March 1 to save 50% forever.
 
 ### How Agents Pay (x402 USDC)
 

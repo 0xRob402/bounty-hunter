@@ -148,14 +148,17 @@ AIS detects:
 
 ## Pricing
 
+> **Launch Special (ends March 1, 2026):** Register now to lock in $0.001/request forever. After March 1, standard pricing is $0.002/request.
+
 | Tier | Price | Requests |
 |------|-------|----------|
 | Free | $0 | 1,000/day |
-| Pay Per Call | $0.0001/request | Unlimited |
+| Launch Price | $0.001/request | Unlimited (locked forever) |
+| Standard (Mar 1+) | $0.002/request | Unlimited |
 
-**Example costs:** 10K requests = $1 | 100K requests = $10
+**Launch pricing:** 10K requests = $10 | 100K requests = $100
 
-Pay with USDC on Solana via [SolPay](https://solpay.cash). No subscriptions, no credit cards — just x402 micropayments.
+Pay with USDC on Solana via [SolPay](https://solpay.cash). No subscriptions, no credit cards — just x402 micropayments. Early agents keep launch pricing permanently.
 
 ## Architecture
 

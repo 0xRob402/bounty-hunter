@@ -172,6 +172,11 @@ export default function DocsPage() {
 
           {/* Pricing */}
           <Section id="pricing" title="Pricing">
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mb-6">
+              <p className="text-emerald-400 text-sm">
+                <strong>Launch Special (ends March 1, 2026):</strong> Register now to lock in $0.001/request forever. After March 1, standard pricing is $0.002/request.
+              </p>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
@@ -189,17 +194,23 @@ export default function DocsPage() {
                     <td className="py-3 pr-4">1,000/day</td>
                     <td className="py-3">All threat detection, secret redaction, threat feed</td>
                   </tr>
-                  <tr>
-                    <td className="py-3 pr-4 font-medium text-emerald-400">Pay Per Call</td>
-                    <td className="py-3 pr-4">$0.0001/req</td>
+                  <tr className="border-b border-gray-800">
+                    <td className="py-3 pr-4 font-medium text-emerald-400">Launch Price</td>
+                    <td className="py-3 pr-4">$0.001/req</td>
                     <td className="py-3 pr-4">Unlimited</td>
-                    <td className="py-3">Pay only for what you use via x402 USDC</td>
+                    <td className="py-3">Lock in forever if you register before March 1</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 font-medium text-gray-500">Standard (Mar 1+)</td>
+                    <td className="py-3 pr-4">$0.002/req</td>
+                    <td className="py-3 pr-4">Unlimited</td>
+                    <td className="py-3">For agents registered after launch period</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div className="mt-4 text-sm text-gray-400">
-              <strong>Example:</strong> 10K requests = $1 | 100K requests = $10
+              <strong>Launch pricing:</strong> 10K requests = $10 | 100K requests = $100
             </div>
             <p className="text-gray-500 mt-4">Pay with USDC on Solana via <a href="https://solpay.cash" className="text-emerald-400 hover:underline">SolPay</a>. No subscriptions, no credit cards.</p>
           </Section>

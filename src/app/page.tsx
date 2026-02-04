@@ -161,6 +161,17 @@ export default async function Home() {
             <p className="text-gray-400 text-lg">Start free. Scale as you grow.</p>
           </div>
 
+          {/* Launch Promo Banner */}
+          <div className="mb-8 bg-gradient-to-r from-emerald-900/40 to-blue-900/40 border border-emerald-500/30 rounded-xl p-6 max-w-3xl mx-auto">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span className="text-emerald-400 font-semibold">Launch Special — Ends March 1, 2026</span>
+            </div>
+            <p className="text-center text-gray-300">
+              Register now and <strong className="text-white">lock in $0.001/request forever</strong>. After March 1, standard pricing is $0.002/request.
+            </p>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <PricingCard
               tier="Free"
@@ -174,22 +185,22 @@ export default async function Home() {
               ]}
             />
             <PricingCard
-              tier="Pay Per Call"
-              price="$0.0001"
+              tier="Launch Price"
+              price="$0.001"
               period="/request"
-              description="Scale without limits"
+              description="Lock in before March 1"
               features={[
                 "Unlimited requests",
-                "Pay only for what you use",
+                "50% off forever (vs $0.002)",
                 "x402 USDC payments",
-                "No commitments",
+                "Early supporter rate",
               ]}
               highlighted
             />
           </div>
           
           <div className="mt-8 bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-3xl mx-auto">
-            <h3 className="font-semibold mb-3">Example Costs</h3>
+            <h3 className="font-semibold mb-3">Example Costs (Launch Pricing)</h3>
             <div className="grid grid-cols-3 gap-4 text-sm">
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">$0</div>
@@ -197,16 +208,19 @@ export default async function Home() {
                 <div className="text-gray-400 text-xs">Free tier</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-400">$1</div>
+                <div className="text-2xl font-bold text-emerald-400">$10</div>
                 <div className="text-gray-500">10K requests</div>
-                <div className="text-gray-400 text-xs">Light usage</div>
+                <div className="text-gray-400 text-xs">Launch price</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-400">$10</div>
+                <div className="text-2xl font-bold text-emerald-400">$100</div>
                 <div className="text-gray-500">100K requests</div>
-                <div className="text-gray-400 text-xs">Production</div>
+                <div className="text-gray-400 text-xs">Launch price</div>
               </div>
             </div>
+            <p className="text-center text-gray-500 text-sm mt-4">
+              After March 1: 10K = $20, 100K = $200. Lock in now to save 50% forever.
+            </p>
           </div>
 
           <p className="text-center text-gray-500 mt-8">
