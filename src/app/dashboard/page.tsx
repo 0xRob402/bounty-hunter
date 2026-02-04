@@ -5,13 +5,44 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Dashboard() {
+  const [loginMode, setLoginMode] = useState<'twitter' | 'apikey'>('twitter');
   const [apiKey, setApiKey] = useState('');
+  const [twitterHandle, setTwitterHandle] = useState('');
   const [agent, setAgent] = useState<any>(null);
+  const [agents, setAgents] = useState<any[]>([]); // For Twitter login (multiple agents)
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isOperatorView, setIsOperatorView] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleTwitterLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const handle = twitterHandle.replace(/^@/, '');
+      const res = await fetch(`/api/operator?twitter=${encodeURIComponent(handle)}`);
+      const data = await res.json();
+
+      if (data.ok && data.agents && data.agents.length > 0) {
+        setAgents(data.agents);
+        setIsOperatorView(true);
+        // If only one agent, auto-select it
+        if (data.agents.length === 1) {
+          setAgent(data.agents[0]);
+        }
+      } else {
+        setError(data.error || 'No agents found for this Twitter handle');
+      }
+    } catch (err) {
+      setError('Failed to connect');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleApiKeyLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -54,36 +85,79 @@ export default function Dashboard() {
             <p className="text-gray-400">Monitor and manage your AI agent's security</p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">API Key</label>
-              <input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="ais_..."
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-emerald-500"
-              />
-            </div>
-            {error && (
-              <div className="text-red-400 text-sm">{error}</div>
-            )}
+          {/* Login Mode Toggle */}
+          <div className="flex bg-gray-800 rounded-lg p-1 mb-6">
             <button
-              type="submit"
-              disabled={loading || !apiKey}
-              className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-gray-700 disabled:cursor-not-allowed px-4 py-3 rounded-lg font-medium transition"
+              onClick={() => setLoginMode('twitter')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition ${
+                loginMode === 'twitter' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
+              }`}
             >
-              {loading ? 'Loading...' : 'View Dashboard'}
+              Twitter Handle
             </button>
-          </form>
+            <button
+              onClick={() => setLoginMode('apikey')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition ${
+                loginMode === 'apikey' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              API Key
+            </button>
+          </div>
+
+          {loginMode === 'twitter' ? (
+            <form onSubmit={handleTwitterLogin} className="space-y-4">
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Twitter Handle</label>
+                <input
+                  type="text"
+                  value={twitterHandle}
+                  onChange={(e) => setTwitterHandle(e.target.value)}
+                  placeholder="@your_handle"
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-emerald-500"
+                />
+                <p className="text-gray-500 text-xs mt-2">Enter the Twitter handle you used to claim your agent</p>
+              </div>
+              {error && (
+                <div className="text-red-400 text-sm">{error}</div>
+              )}
+              <button
+                type="submit"
+                disabled={loading || !twitterHandle}
+                className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-gray-700 disabled:cursor-not-allowed px-4 py-3 rounded-lg font-medium transition"
+              >
+                {loading ? 'Loading...' : 'View My Agents'}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleApiKeyLogin} className="space-y-4">
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">API Key</label>
+                <input
+                  type="password"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="ais_..."
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-emerald-500"
+                />
+                <p className="text-gray-500 text-xs mt-2">For agents: use your API key from registration</p>
+              </div>
+              {error && (
+                <div className="text-red-400 text-sm">{error}</div>
+              )}
+              <button
+                type="submit"
+                disabled={loading || !apiKey}
+                className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-gray-700 disabled:cursor-not-allowed px-4 py-3 rounded-lg font-medium transition"
+              >
+                {loading ? 'Loading...' : 'View Dashboard'}
+              </button>
+            </form>
+          )}
 
           <div className="text-center text-gray-500 text-sm mt-6 space-y-2">
             <p>
-              Don&apos;t have an API key?{' '}
-              <Link href="/api/register" className="text-emerald-400 hover:underline">Register your agent</Link>
-            </p>
-            <p>
-              Want to claim ownership?{' '}
+              Haven&apos;t claimed an agent yet?{' '}
               <Link href="/claim" className="text-emerald-400 hover:underline">Claim your agent</Link>
             </p>
           </div>
